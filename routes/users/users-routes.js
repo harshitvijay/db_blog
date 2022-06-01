@@ -51,11 +51,18 @@ router.get("/id/:id", (req, res) => {
   const { id } = req.params;
   Blogs.getUserById(id)
     .then((user) => {
-      res.status(200).send({
-        success: true,
-        message: "user fetched successfully",
-        data: user,
-      });
+      if (user) {
+        res.status(200).send({
+          success: true,
+          message: "user fetched successfully",
+          data: user,
+        });
+      } else {
+        res.status(404).send({
+          success: false,
+          message: "user not exist with this id",
+        });
+      }
     })
     .catch((error) => {
       res.status(500).send({
