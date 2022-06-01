@@ -25,23 +25,30 @@ router.get("/:username", (req, res) => {
   const { username } = req.params;
   Blogs.getUserByUsername(username)
     .then((user) => {
-      res.status(200).send({
-        success: true,
-        message: "user fetched successfully",
-        data: user,
-      });
+      if (user) {
+        res.status(200).send({
+          success: true,
+          message: "user fetched successfully",
+          data: user,
+        });
+      } else {
+        res.status(404).send({
+          success: false,
+          message: "user not exist with this username",
+        });
+      }
     })
     .catch((error) => {
       res.status(500).send({
         success: false,
-        message: "Error in fetching user bu username",
+        message: "Error in fetching user by username",
         data: error,
       });
     });
 });
 
-router.get("/?id", (req, res) => {
-  const { id } = req.query;
+router.get("/id/:id", (req, res) => {
+  const { id } = req.params;
   Blogs.getUserById(id)
     .then((user) => {
       res.status(200).send({
@@ -53,7 +60,7 @@ router.get("/?id", (req, res) => {
     .catch((error) => {
       res.status(500).send({
         success: false,
-        message: "Error in fetching user bu username",
+        message: "Error in fetching user by id",
         data: error,
       });
     });
