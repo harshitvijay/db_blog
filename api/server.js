@@ -5,6 +5,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const authRouter = require("../routes/auth/auth-routes");
 const userRouter = require("../routes/users/users-routes");
+const blogRouter = require("../routes/blogs/blogs-routes");
 const restricted = require("../routes/auth/restricted-middleware");
 
 const app = express();
@@ -23,5 +24,7 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRouter);
 
 app.use("/api/users", restricted, userRouter);
+
+app.use("/api/blogs", restricted, blogRouter);
 
 module.exports = app;

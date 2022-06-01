@@ -57,7 +57,7 @@ const getAllBlog = async () => {
 
 const getUsersBlog = async (user_id) => {
   return await db("users as u")
-    .join("blogs as b", "u.id", "m.user_id")
+    .join("blogs as b", "u.id", "b.user_id")
     .select(
       "u.id as userID",
       "u.name as name",
