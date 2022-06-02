@@ -17,10 +17,8 @@ router.post("/register", (req, res) => {
     });
   }
   const hashPassword = bcrypt.hashSync(userObj.password, 12);
-  const hashSecQue = bcrypt.hashSync(userObj.security_que, 12);
   const hashSecAns = bcrypt.hashSync(userObj.security_ans, 12);
   userObj.password = hashPassword;
-  userObj.security_que = hashSecQue;
   userObj.security_ans = hashSecAns;
   Blogs.addUser(userObj)
     .then((user) => {
@@ -61,12 +59,9 @@ router.post("/login", (req, res) => {
         res.status(200).send({
           success: true,
           message: "Login sucessfull",
-          token,
           data: {
-            userId: user.id,
-            name: user.name,
             username: user.username,
-            role: user.role,
+            security_que: user.security_que,
           },
         });
       } else {
@@ -97,7 +92,7 @@ router.post("/2fa", (req, res) => {
     .then((user) => {
       if (
         user &&
-        bcrypt.compareSync(security_que, user.security_que) &&
+        security_que === user.security_que &&
         bcrypt.compareSync(security_ans, user.security_ans)
       ) {
         const token = generateToken(user);
