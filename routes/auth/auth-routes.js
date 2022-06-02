@@ -62,6 +62,12 @@ router.post("/login", (req, res) => {
           success: true,
           message: "Login sucessfull",
           token,
+          data: {
+            userId: user.id,
+            name: user.name,
+            username: user.username,
+            role: user.role,
+          },
         });
       } else {
         res.status(401).send({
@@ -99,6 +105,12 @@ router.post("/2fa", (req, res) => {
           success: true,
           message: "Login sucessfull",
           token,
+          data: {
+            userId: user.id,
+            name: user.name,
+            username: user.username,
+            role: user.role,
+          },
         });
       } else {
         res.status(401).send({
