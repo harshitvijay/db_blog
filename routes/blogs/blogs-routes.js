@@ -94,4 +94,34 @@ router.patch("/:id", (req, res) => {
     });
 });
 
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  Blogs.getBlogById(id)
+    .then((blog) => {
+      if (blog) {
+        Blogs.getUserById(blog.user_id).then((user) => {
+          if (user) {
+            res.status(200).send({
+              success: true,
+              message: "Blog with id  retrived successfully",
+              data: { blog, user },
+            });
+          }
+        });
+      } else {
+        res.status(404).send({
+          success: false,
+          message: "Blog not found with this id",
+        });
+      }
+    })
+    .catch((error) => {
+      res.status(500).send({
+        success: false,
+        message: "Error in fetching lesson",
+        data: error,
+      });
+    });
+});
+
 module.exports = router;
