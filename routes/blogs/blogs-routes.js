@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
         usersBlogs.push({
           userId: blogUser.id,
           name: blogUser.name,
-          username: blogUser.username,
+          userName: blogUser.username,
           role: blogUser.role,
           blogId: blog.id,
           blogTitle: blog.title,

@@ -141,9 +141,6 @@ router.post("/:id/blogs", (req, res) => {
         res
           .status(400)
           .send({ succes: false, message: "Reader cannot add the post" });
-      } else {
-        blog["status"] =
-          user.role === "super admin" ? "published" : "in review";
       }
       // Check for all required field
       if (!(blog.title && blog.content)) {
